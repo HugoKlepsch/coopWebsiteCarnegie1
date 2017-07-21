@@ -1,0 +1,2 @@
+stream editor
+sed -e 's/[- ]/:/g' #changes spaces and dashes to colon
