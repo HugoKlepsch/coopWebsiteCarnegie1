@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "alwaysStrict": true,
+        "noImplicitAny": false,
+        "sourceMap": true,
+        "typeRoots": [
+            "./node_modules/@types"
+        ],
+        "outDir": "build",
+        "pretty": true
+    },
+    "include": [
+        "src/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "build",
+        "**/*.spec.ts"
+    ]
+}
