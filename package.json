@@ -9,7 +9,7 @@
   "description": "Coop website carnegie tech 1",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "tsc",
+    "compile": "tsc && cp -r serverAssets/ build/serverAssets/ && cp -r node_modules/ build/",
     "serve": "node build/app.js",
     "start": "NODE_ENV=development npm-run-all compile serve"
   },
@@ -17,6 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "@types/express": "^4.0.36",
+    "bootstrap": "^3.3.7",
     "connect": "^3.6.2",
     "convict": "^4.0.0",
     "express": "^4.15.3",

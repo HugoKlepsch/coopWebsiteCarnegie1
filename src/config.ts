@@ -6,7 +6,7 @@ export let conf: convict.Config = convict({
     port: {
         doc: 'The port to listen on',
         format: 'port',
-        default: 8080, 
+        default: 8080,
         env: 'PORT'
     },
     assetsDir: {
@@ -16,7 +16,9 @@ export let conf: convict.Config = convict({
                 throw new Error('ASSETS_DIR must be a valid path');
             }
         },
-        default: 'serverAssets/',
+        default: 'build/serverAssets/',
         env: 'ASSETS_DIR'
     }
 });
+
+conf.validate();
