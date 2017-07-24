@@ -31,3 +31,4 @@
 * Content built with <> markdown -> html converter. Possibilities:
     - 2750 wpml -> html
     - ???
+    - OR, content written in html with bootstrap

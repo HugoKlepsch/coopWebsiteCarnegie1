@@ -2,5 +2,4 @@
 *.o
 *.a
 le-docker-compose/
-serverAssets/
 node_modules/
