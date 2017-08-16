@@ -29,7 +29,8 @@ server.use('/', (req: express.Request, res: express.Response, next: express.Next
         http_method:req.method,
         uri_path: url.path,
         src_ip: req.connection.remoteAddress,
-        response_code: res.statusCode
+        response_code: res.statusCode,
+        response_time: time
     });
     next();
 });
