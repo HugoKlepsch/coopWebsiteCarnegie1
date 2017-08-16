@@ -23,6 +23,8 @@
 * Served with Nodejs using:
     - Connect
     - serve-static
+    - Roll your own???
+    - reverse proxy nginx
 * Content built with <> markdown -> html converter. Possibilities:
     - 2750 wpml -> html
     - ???
