@@ -1,3 +1,4 @@
+import { conf } from './config';
 
 export enum Level {
     NONE = 0,
@@ -14,16 +15,15 @@ export function logBasic(message: string): void {
 }
 
 export function log(level: Level, fields: object): void {
-    // TODO stop logging if loglevel > level
+    if (conf.get('logLevel') >= level) {
+        const logStr: string = '[' + new Date().toISOString() + '] ';
 
+        const fieldsArray: string[] = [];
 
-    const logStr: string = '[' + new Date().toISOString() + '] ';
+        Object.keys(fields).forEach((key: string) => {
+            fieldsArray.push(key + '=' + fields[key]);
+        });
 
-    const fieldsArray: string[] = [];
-
-    Object.keys(fields).forEach((key: string) => {
-        fieldsArray.push(key + '=' + fields[key]);
-    });
-
-    console.log(logStr + fieldsArray.join(', '));
+        console.log(logStr + fieldsArray.join(', '));
+    }
 }

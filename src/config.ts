@@ -18,6 +18,12 @@ export let conf: convict.Config = convict({
         },
         default: 'build/serverAssets/',
         env: 'ASSETS_DIR'
+    },
+    logLevel: {
+        doc: 'The log level mask. Masks log messages of a lower priority. 0 = no logs',
+        format: 'int',
+        default: 5,
+        env: 'LOG_LEVEL'
     }
 });
 

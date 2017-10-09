@@ -21,16 +21,14 @@
 * Let's encrypt
 * Gerrit
 * Jenkins
+* Cassandra
 
 # Website archtitecture
 
 * Deployed with Docker
 * Served with Nodejs using:
-    - Connect
-    - serve-static
-    - Roll your own???
-    - reverse proxy nginx
+    - Express
+        - If url ends in `.blogml`, look for file in serverAssets, render and serve it
+        - Otherwise, just serve the file.
 * Content built with <> markdown -> html converter. Possibilities:
-    - 2750 wpml -> html
-    - ???
-    - OR, content written in html with bootstrap
+    - Content written in basic html or markdown with converter middleware
