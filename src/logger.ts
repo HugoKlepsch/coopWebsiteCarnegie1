@@ -21,6 +21,7 @@ export function log(level: Level, fields: object): void {
         const logStr: string = '[' + new Date().toISOString() + '] ';
 
         const fieldsArray: string[] = [];
+        fieldsArray.push('logLevel=' + Level[level]);
 
         Object.keys(fields).forEach((key: string) => {
             fieldsArray.push(key + '=' + fields[key]);
