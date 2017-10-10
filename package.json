@@ -11,7 +11,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "tsc; cp -r serverAssets/ build/",
     "serve": "node build/app.js",
-    "start": "NODE_ENV=development npm-run-all compile serve"
+    "start": "NODE_ENV=development npm-run-all compile serve",
+    "docker:config":"cp deploy/Dockerfile build/",
+    "docker:build":"yarn docker:config && docker build -t ctechwebsite:latest build",
+    "docker:run":"docker run ctechwebsite:latest"
   },
   "author": "",
   "license": "MIT",
