@@ -1,5 +1,7 @@
 import { conf } from './config';
 
+// tslint:disable:no-console
+
 export enum Level {
     NONE = 0,
         FATAL = 1,

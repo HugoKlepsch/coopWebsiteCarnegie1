@@ -1,32 +1,17 @@
-
-import * as http from 'http';
 import * as express from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as URL from 'url';
 
-import * as logger from './logger';
 import { conf } from './config';
+import * as logger from './logger';
 
 export const server: express.Express = express();
 
-
-var staticDir = conf.get('assetsDir');
+const staticDir = conf.get('assetsDir');
 
 logger.log(logger.Level.INFO, {
     assetsDir: staticDir
-});
-
-// Logging middleware
-server.use((req: express.Request, res: express.Response, next: express.NextFunction): void => {
-    const url: URL.Url = URL.parse(req.originalUrl);
-
-    logger.log(logger.Level.INFO, {
-        http_method:req.method,
-        uri_path: url.path,
-        src_ip: req.connection.remoteAddress,
-        response_code: res.statusCode,
-    });
 });
 
 // Redirect to blog renderer middleware
@@ -45,6 +30,26 @@ server.use((req: express.Request, res: express.Response, next: express.NextFunct
 
 // Serve files
 server.get('/*', (req: express.Request, res: express.Response, next: express.NextFunction): void => {
+    logger.log(logger.Level.INFO, {
+        message: 'In server.get'
+    });
 
     res.send('hello world! :)');
+
+    next();
+});
+
+// Logging middleware, should be added at the end so that it captures any response_codes set by
+// previous middlewares/handlers.
+server.use((req: express.Request, res: express.Response, next: express.NextFunction): void => {
+    const url: URL.Url = URL.parse(req.originalUrl);
+
+    logger.log(logger.Level.INFO, {
+        http_method: req.method,
+        uri_path: url.path,
+        src_ip: req.connection.remoteAddress,
+        response_code: res.statusCode
+    });
+
+    next();
 });

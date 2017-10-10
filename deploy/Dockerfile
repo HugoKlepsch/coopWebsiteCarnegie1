@@ -2,8 +2,17 @@ FROM node:8-slim
 
 ADD ./ /server
 
+# Add Tini
+ENV TINI_VERSION v0.16.1
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
+RUN chmod +x /tini
+ENTRYPOINT ["/tini", "--"]
+
 WORKDIR /server
 
 ENV ASSETS_DIR=serverAssets/
+ENV PORT=8080
 
-CMD node app.js
+EXPOSE 8080
+
+CMD ["node", "app.js"]

@@ -1,10 +1,8 @@
-
-
 import * as Express from 'express';
 
-import { server as app } from './server';
+import { conf } from './config';
 import * as logger from './logger';
-import { conf } from './config'
+import { server as app } from './server';
 
 app.listen(conf.get('port'), () => {
     logger.log(logger.Level.INFO, {message: 'Server startup', port: conf.get('port')});
@@ -15,4 +13,3 @@ process.on('exit', () => {
 });
 
 process.on('SIGINT', process.exit);
-

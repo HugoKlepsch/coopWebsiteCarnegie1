@@ -10,11 +10,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "tsc; cp -r serverAssets/ build/",
+    "lint":"tslint -p tsconfig.json --type-check",
     "serve": "node build/app.js",
-    "start": "NODE_ENV=development npm-run-all compile serve",
-    "docker:config":"cp deploy/Dockerfile build/",
-    "docker:build":"yarn docker:config && docker build -t ctechwebsite:latest build",
-    "docker:run":"docker run ctechwebsite:latest"
+    "start": "NODE_ENV=development npm-run-all compile lint serve",
+    "docker:config": "yarn compile && cp deploy/Dockerfile build/",
+    "docker:build": "yarn docker:config && docker build -t ctechwebsite:latest build",
+    "docker:run": "docker run -p 8080:8080 ctechwebsite:latest"
   },
   "author": "",
   "license": "MIT",
@@ -27,6 +28,7 @@
     "npm-run-all": "^4.0.2",
     "response-time": "^2.3.2",
     "serve-static": "^1.12.3",
+    "tslint": "^5.7.0",
     "typescript": "^2.4.2",
     "url": "^0.11.0"
   }
