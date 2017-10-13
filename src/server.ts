@@ -8,28 +8,52 @@ import { conf } from './config';
 import * as logger from './logger';
 
 export interface IHttpRequest extends express.Request {
-    isRenderingBlog?: boolean;
+    filePermission?: boolean;
+    sendType?: 'blog'|'file';
 }
 
 export const server: express.Express = express();
 
-const staticDir = conf.get('assetsDir');
+const assetsDir = conf.get('assetsDir');
+
+const allowedDirs: string[] = [
+    '/server/serverAssets/',
+    '/server/bootstrap/'
+];
 
 logger.log(logger.Level.INFO, {
-    assetsDir: staticDir
+    assetsDir
 });
 
-// Redirect to blog renderer middleware
+// Verify permissions and get serve type middleware
+// sendType can be either a normal file (file) or a blog post (blog)
 server.use((req: IHttpRequest, res: express.Response, next: express.NextFunction): void => {
     logger.log(logger.Level.DEBUG, {
         message: 'In middleware before server.get'
     });
+    const url: URL.Url = URL.parse(req.originalUrl);
+
+    // Safe defaults
+    req.filePermission = false;
+    req.sendType = 'file';
+
+    const filePath: string = path.join('/server/serverAssets/', url.path);
+    logger.log(logger.Level.DEBUG, {
+        filePath
+    });
+
+    if (verifyFilePermission(filePath, allowedDirs)) {
+        req.filePermission = true;
+    } else {
+        req.filePermission = false;
+        // We will send the user a 'forbidden' message in the send middleware
+        next();
+    }
 
     // If the file path ends in .blogml:
     //  - look for the file in serverAssets/blog/, if exists:
     //      - Render it, wrap it in the default blog skin and send it, skipping later handlers
     // Otherwise, serve the file statically
-    const url: URL.Url = URL.parse(req.originalUrl);
     const blogFileRegex: RegExp = new RegExp('^.+[.]blogml$');
     logger.log(logger.Level.DEBUG, {
         path: url.path
@@ -37,36 +61,48 @@ server.use((req: IHttpRequest, res: express.Response, next: express.NextFunction
     if (url.path.match(blogFileRegex)) {
         // It's a blog file, render and then send
         logger.log(logger.Level.DEBUG, {
-            message: 'Requested a blog file, rendering...'
+            message: 'Requested a blog file'
         });
-        req.isRenderingBlog = true;
-        res.send('(blog post here)');
+        req.sendType = 'blog';
     } else {
-        req.isRenderingBlog = false;
+        req.sendType = 'file';
     }
 
     next();
 });
 
-// Serve files
+// Serve files or render
+// This is the only middleware that sends responses to the user.
 server.get('/*', (req: IHttpRequest, res: express.Response, next: express.NextFunction): void => {
     logger.log(logger.Level.DEBUG, {
         message: 'In server.get'
     });
 
     // If we're not rendering a blog post, just send the requested file
-    if (req.isRenderingBlog !== undefined) {
+    if (req.filePermission !== undefined && req.sendType !== undefined) {
+
+        if (!req.filePermission) {
+            sendForbidden(res);
+            next();
+        }
+
         logger.log(logger.Level.DEBUG, {
-            isRenderingBlog: req.isRenderingBlog
+            sendType: req.sendType
         });
 
-        if (!req.isRenderingBlog) {
+        if (req.sendType === 'blog') {
+            // Render and send blog
+            // TODO
+            res.send('This is a blog post');
+        } else if (req.sendType === 'file') {
             // Send the file
+            // TODO
             res.send('hello world! :)');
+        } else {
+            sendInternalServerError(res);
         }
     } else {
-        // Something went wrong..
-        res.sendStatus(statusCodes.INTERNAL_SERVER_ERROR);
+        sendInternalServerError(res);
     }
 
     next();
@@ -86,3 +122,59 @@ server.use((req: IHttpRequest, res: express.Response, next: express.NextFunction
 
     next();
 });
+
+// verifyFilePermission
+// Given a file path, verify that it's final destination is a member or descendant of a path
+// the server has permission to send. This *should not* replace proper unix permissions.
+// IN:
+//  filePath: string - The path to verify
+//  allowedPaths: string[] - A list of allowed directories
+// OUT: true if the file is allowed to be sent
+function verifyFilePermission(filePath: string, allowedPaths: string[]): boolean {
+    // The given path may contain '..', which could 'back it out' of a safe path
+    // This is a cannonical, absolute path. (no '..' or '.' and relative to /)
+    const pathSegments: string[] = path.resolve(filePath).split(path.sep);
+
+    // As long as the path is a member or a descendant of one of the allowedPaths, it is safe.
+    return allowedPaths.some((allowedPath: string) => {
+        const allowedSegments: string[] = path.resolve(allowedPath).split(path.sep);
+
+        // There's no way it can be a member or descendant if it's not as long
+        if (pathSegments.length < allowedSegments.length) {
+            return false;
+        }
+
+        for (let i = 0; i < allowedSegments.length; ++i) {
+            // Ensure each segment matches
+            if (pathSegments[i] !== allowedSegments[i]) {
+                return false;
+            }
+        }
+        return true;
+    });
+}
+
+// sendFileNotFound
+// 403
+// Sends a pretty html page indicating you don't have permissions to access the page.
+function sendForbidden(res: express.Response): void {
+    // TODO send a pretty html 404 page
+    res.sendStatus(statusCodes.NOT_FOUND);
+}
+
+// sendFileNotFound
+// 404
+// Sends a pretty html page with file not found error.
+function sendFileNotFound(res: express.Response): void {
+    // TODO send a pretty html 404 page
+    res.sendStatus(statusCodes.NOT_FOUND);
+}
+
+// sendFileNotFound
+// 500
+// Sends a pretty html page with internal server error, and offer for communications for breaking
+// the site.
+function sendInternalServerError(res: express.Response): void {
+    // TODO send a pretty html 500 page, "you broke my site, I'd love to hear how"
+    res.sendStatus(statusCodes.INTERNAL_SERVER_ERROR);
+}
