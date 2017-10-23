@@ -13,7 +13,7 @@
     "lint": "tslint -p tsconfig.json --type-check",
     "serve": "node build/app.js",
     "start": "NODE_ENV=development npm-run-all compile lint serve",
-    "docker:config": "yarn compile && cp deploy/Dockerfile build/",
+    "docker:config": "yarn compile && cp deploy/Dockerfile package.json build/",
     "docker:build": "yarn docker:config && docker build -t ctechwebsite:latest build",
     "docker:run": "docker run -p 8080:8080 ctechwebsite:latest"
   },
