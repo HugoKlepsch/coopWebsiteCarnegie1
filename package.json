@@ -12,8 +12,10 @@
     "compile": "tsc; cp -r serverAssets/ build/",
     "lint": "tslint -p tsconfig.json --type-check",
     "serve": "node build/app.js",
+    "ndb": "node inspect build/app.js",
     "start": "NODE_ENV=development npm-run-all compile lint serve",
-    "docker:config": "yarn compile && cp deploy/Dockerfile package.json build/",
+    "debug": "NODE_ENV=development npm-run-all compile ndb",
+    "docker:config": "yarn && yarn compile && cp -r deploy/Dockerfile node_modules/ build/",
     "docker:build": "yarn docker:config && docker build -t ctechwebsite:latest build",
     "docker:run": "docker run -p 8080:8080 ctechwebsite:latest"
   },

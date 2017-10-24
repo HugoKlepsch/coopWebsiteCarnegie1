@@ -10,6 +10,7 @@ import * as logger from './logger';
 export interface IHttpRequest extends express.Request {
     filePermission?: boolean;
     sendType?: 'blog'|'file';
+    filePath: string;
 }
 
 export const server: express.Express = express();
@@ -18,7 +19,8 @@ const assetsDir = conf.get('assetsDir');
 
 const allowedDirs: string[] = [
     '/server/serverAssets/',
-    '/server/bootstrap/'
+    '/server/bootstrap/',
+    path.join(__dirname + '/serverAssets/')
 ];
 
 logger.log(logger.Level.INFO, {
@@ -37,13 +39,14 @@ server.use((req: IHttpRequest, res: express.Response, next: express.NextFunction
     req.filePermission = false;
     req.sendType = 'file';
 
-    const filePath: string = path.join('/server/serverAssets/', url.path);
+    const filePath: string = path.join(__dirname + '/serverAssets/', url.path);
     logger.log(logger.Level.DEBUG, {
         filePath
     });
 
     if (verifyFilePermission(filePath, allowedDirs)) {
         req.filePermission = true;
+        req.filePath = filePath;
     } else {
         req.filePermission = false;
         // We will send the user a 'forbidden' message in the send middleware
@@ -79,9 +82,14 @@ server.get('/*', (req: IHttpRequest, res: express.Response, next: express.NextFu
     });
 
     // If we're not rendering a blog post, just send the requested file
-    if (req.filePermission !== undefined && req.sendType !== undefined) {
+    if (req.filePermission !== undefined &&
+        req.sendType !== undefined &&
+        req.filePath !== undefined) {
 
         if (!req.filePermission) {
+            logger.log(logger.Level.DEBUG, {
+                message: 'In server.get, sending forbidden'
+            });
             sendForbidden(res);
             next();
         }
@@ -96,8 +104,7 @@ server.get('/*', (req: IHttpRequest, res: express.Response, next: express.NextFu
             res.send('This is a blog post');
         } else if (req.sendType === 'file') {
             // Send the file
-            // TODO
-            res.send('hello world! :)');
+            sendFile(req.filePath, res);
         } else {
             sendInternalServerError(res);
         }
@@ -177,4 +184,10 @@ function sendFileNotFound(res: express.Response): void {
 function sendInternalServerError(res: express.Response): void {
     // TODO send a pretty html 500 page, "you broke my site, I'd love to hear how"
     res.sendStatus(statusCodes.INTERNAL_SERVER_ERROR);
+}
+
+function sendFile(filename: string, res: express.Response): void {
+    const text: string = fs.readFileSync(filename, { encoding: 'utf8', flag: 'r' });
+
+    res.send(text);
 }
