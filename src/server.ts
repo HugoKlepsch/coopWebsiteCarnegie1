@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as fs from 'fs';
 import * as statusCodes from 'http-status-codes';
+import * as mime from 'mime-types';
 import * as path from 'path';
 import * as URL from 'url';
 
@@ -124,7 +125,8 @@ server.use((req: IHttpRequest, res: express.Response, next: express.NextFunction
         http_method: req.method,
         uri_path: url.path,
         src_ip: req.connection.remoteAddress,
-        response_code: res.statusCode
+        response_code: res.statusCode,
+        contentType: res.get('Content-Type')
     });
 
     next();
@@ -187,7 +189,31 @@ function sendInternalServerError(res: express.Response): void {
 }
 
 function sendFile(filename: string, res: express.Response): void {
+    logger.log(logger.Level.INFO, {
+        message: 'Requesting file',
+        filePath: filename
+    });
     const text: string = fs.readFileSync(filename, { encoding: 'utf8', flag: 'r' });
 
-    res.send(text);
+    const contentType = getFileMIME(filename);
+    logger.log(logger.Level.INFO, {
+        contentType
+    });
+    res.type(contentType).send(text);
+}
+
+function getFileMIME(filename: string): string {
+    let mimeType: string = 'text/html';
+
+    const lookupVal: string | boolean = mime.lookup(path.extname(filename));
+
+    if (typeof lookupVal === 'string') {
+        mimeType = lookupVal;
+    } else if (typeof lookupVal === 'boolean') {
+        mimeType = 'text/html';
+    } else {
+        mimeType = 'text/html';
+    }
+
+    return mimeType;
 }
