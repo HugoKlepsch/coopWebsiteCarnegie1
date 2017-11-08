@@ -193,7 +193,7 @@ function sendFile(filename: string, res: express.Response): void {
         message: 'Requesting file',
         filePath: filename
     });
-    const text: string = fs.readFileSync(filename, { encoding: 'utf8', flag: 'r' });
+    const text: Buffer = fs.readFileSync(filename, { flag: 'r' });
 
     const contentType = getFileMIME(filename);
     logger.log(logger.Level.INFO, {
