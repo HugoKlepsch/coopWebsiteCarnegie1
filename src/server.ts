@@ -196,9 +196,6 @@ function sendFile(filename: string, res: express.Response): void {
     const text: Buffer = fs.readFileSync(filename, { flag: 'r' });
 
     const contentType = getFileMIME(filename);
-    logger.log(logger.Level.INFO, {
-        contentType
-    });
     res.type(contentType).send(text);
 }
 
