@@ -5,6 +5,7 @@ import * as mime from 'mime-types';
 import * as path from 'path';
 import * as URL from 'url';
 
+import { cacheClient } from './cache';
 import { conf } from './config';
 import * as logger from './logger';
 
@@ -12,6 +13,7 @@ export interface IHttpRequest extends express.Request {
     filePermission?: boolean;
     sendType?: 'blog'|'file';
     filePath: string;
+    urlPath: string;
 }
 
 export const server: express.Express = express();
@@ -28,28 +30,90 @@ logger.log(logger.Level.INFO, {
     assetsDir
 });
 
+const doCaching: boolean = conf.get('doCaching');
+
+// Redirector middleware
+server.use((req: IHttpRequest, res: express.Response, next: express.NextFunction): void => {
+    req.urlPath = URL.parse(req.originalUrl).path;
+
+    logger.log(logger.Level.DEBUG, {
+        message: 'In base redirector',
+        urlPath: req.urlPath
+    });
+
+    if (req.urlPath === '/') {
+        logger.log(logger.Level.INFO, {
+            message: 'Redirecting to index.html',
+            urlPath: req.urlPath
+        });
+        res.redirect('index.html');
+        return;
+    }
+
+    next();
+});
+
+// Cache middleware
+// We don't have to verify permissions or render because the permissions were already
+// computed to set the cache.
+server.use((req: IHttpRequest, res: express.Response, next: express.NextFunction): void => {
+    // TODO
+    if (doCaching) {
+        cacheClient.get(name, (err: Error, cacheResponse: string) => {
+            if (cacheResponse !== null) {
+                // Return cached result
+                // TODO
+                return; // Don't let the rest of the middlewares run
+            } else {
+                // Not cached, continue
+                next();
+            }
+
+            // TODO this doesn't go here, just an example of what it should look like
+            // Once we get the age from the database, store it in the cache.
+            cacheClient.set(req.urlPath, cacheResponse, () => {
+
+                // At this point, our data is successfully stored in the redis cache
+                // We now return the age through the callback
+                // cb(getTheVariable)
+            });
+        });
+    }
+
+    next();
+});
+
 // Verify permissions and get serve type middleware
 // sendType can be either a normal file (file) or a blog post (blog)
 server.use((req: IHttpRequest, res: express.Response, next: express.NextFunction): void => {
     logger.log(logger.Level.DEBUG, {
         message: 'In middleware before server.get'
     });
-    const url: URL.Url = URL.parse(req.originalUrl);
 
     // Safe defaults
     req.filePermission = false;
     req.sendType = 'file';
 
-    const filePath: string = path.join(__dirname + '/serverAssets/', url.path);
-    logger.log(logger.Level.DEBUG, {
-        filePath
-    });
+    const filePath: string = path.join(__dirname + '/serverAssets/', req.urlPath);
+    req.filePath = filePath;
 
     if (verifyFilePermission(filePath, allowedDirs)) {
         req.filePermission = true;
         req.filePath = filePath;
+
+        logger.log(logger.Level.DEBUG, {
+            message: 'File failed permissions check',
+            filePath
+        });
+
     } else {
         req.filePermission = false;
+
+        logger.log(logger.Level.DEBUG, {
+            message: 'File passed permissions check',
+            filePath
+        });
+
         // We will send the user a 'forbidden' message in the send middleware
         next();
     }
@@ -59,14 +123,8 @@ server.use((req: IHttpRequest, res: express.Response, next: express.NextFunction
     //      - Render it, wrap it in the default blog skin and send it, skipping later handlers
     // Otherwise, serve the file statically
     const blogFileRegex: RegExp = new RegExp('^.+[.]blogml$');
-    logger.log(logger.Level.DEBUG, {
-        path: url.path
-    });
-    if (url.path.match(blogFileRegex)) {
+    if (req.urlPath.match(blogFileRegex)) {
         // It's a blog file, render and then send
-        logger.log(logger.Level.DEBUG, {
-            message: 'Requested a blog file'
-        });
         req.sendType = 'blog';
     } else {
         req.sendType = 'file';
@@ -78,9 +136,6 @@ server.use((req: IHttpRequest, res: express.Response, next: express.NextFunction
 // Serve files or render
 // This is the only middleware that sends responses to the user.
 server.get('/*', (req: IHttpRequest, res: express.Response, next: express.NextFunction): void => {
-    logger.log(logger.Level.DEBUG, {
-        message: 'In server.get'
-    });
 
     // If we're not rendering a blog post, just send the requested file
     if (req.filePermission !== undefined &&
@@ -89,13 +144,14 @@ server.get('/*', (req: IHttpRequest, res: express.Response, next: express.NextFu
 
         if (!req.filePermission) {
             logger.log(logger.Level.DEBUG, {
-                message: 'In server.get, sending forbidden'
+                message: 'In serve files or render, sending forbidden'
             });
             sendForbidden(res);
             next();
         }
 
         logger.log(logger.Level.DEBUG, {
+            message: 'In server.get',
             sendType: req.sendType
         });
 
@@ -108,9 +164,19 @@ server.get('/*', (req: IHttpRequest, res: express.Response, next: express.NextFu
             sendFile(req.filePath, res);
         } else {
             sendInternalServerError(res);
+            logger.log(logger.Level.ERROR, {
+                message: 'req.sendType not valid',
+                sendType: req.sendType
+            });
         }
     } else {
         sendInternalServerError(res);
+        logger.log(logger.Level.ERROR, {
+            message: 'req undefined',
+            sendType: req.sendType,
+            filePermission: req.filePermission,
+            filePath: req.filePath
+        });
     }
 
     next();
@@ -119,11 +185,11 @@ server.get('/*', (req: IHttpRequest, res: express.Response, next: express.NextFu
 // Logging middleware, should be added at the end so that it captures any response_codes set by
 // previous middlewares/handlers.
 server.use((req: IHttpRequest, res: express.Response, next: express.NextFunction): void => {
-    const url: URL.Url = URL.parse(req.originalUrl);
 
     logger.log(logger.Level.INFO, {
         http_method: req.method,
-        uri_path: url.path,
+        sendType: req.sendType,
+        uri_path: req.urlPath,
         src_ip: req.connection.remoteAddress,
         response_code: res.statusCode,
         contentType: res.get('Content-Type')
@@ -147,9 +213,13 @@ function verifyFilePermission(filePath: string, allowedPaths: string[]): boolean
     // As long as the path is a member or a descendant of one of the allowedPaths, it is safe.
     return allowedPaths.some((allowedPath: string) => {
         const allowedSegments: string[] = path.resolve(allowedPath).split(path.sep);
+        logger.log(logger.Level.DEBUG, {
+            allowedPath: allowedSegments,
+            testPath: pathSegments
+        }); // TODO examine paths
 
         // There's no way it can be a member or descendant if it's not as long
-        if (pathSegments.length < allowedSegments.length) {
+        if (pathSegments.length <= allowedSegments.length) {
             return false;
         }
 
@@ -189,10 +259,6 @@ function sendInternalServerError(res: express.Response): void {
 }
 
 function sendFile(filename: string, res: express.Response): void {
-    logger.log(logger.Level.INFO, {
-        message: 'Requesting file',
-        filePath: filename
-    });
     const text: Buffer = fs.readFileSync(filename, { flag: 'r' });
 
     const contentType = getFileMIME(filename);

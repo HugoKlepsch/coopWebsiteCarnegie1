@@ -23,7 +23,26 @@ export let conf: convict.Config = convict({
         format: 'port',
         default: 8080,
         env: 'PORT'
+    },
+    doCaching: {
+        doc: 'True to use redis as cache, false means no caching',
+        format: 'Boolean',
+        default: false,
+        env: 'DO_CACHING'
+    },
+    redisPort: {
+        doc: 'The port for redis to connect to',
+        format: 'port',
+        default: 6379,
+        env: 'REDIS_PORT'
+    },
+    redisHost: {
+        doc: 'The host for redis to connect to',
+        format: 'ipaddress',
+        default: '127.0.0.1',
+        env: 'REDIS_HOST'
     }
+
 });
 
 conf.validate();

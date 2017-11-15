@@ -5,7 +5,12 @@ import * as logger from './logger';
 import { server as app } from './server';
 
 app.listen(conf.get('port'), () => {
-    logger.log(logger.Level.INFO, {message: 'Server startup', port: conf.get('port')});
+    logger.log(logger.Level.INFO, {
+        message: 'Server startup',
+        port: conf.get('port'),
+        logLevel: conf.get('logLevel'),
+        doCaching: conf.get('doCaching')
+    });
 });
 
 process.on('exit', () => {
