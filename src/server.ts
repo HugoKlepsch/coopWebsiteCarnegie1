@@ -12,8 +12,8 @@ import * as logger from './logger';
 export interface IHttpRequest extends express.Request {
     filePermission?: boolean;
     sendType?: 'blog'|'file';
-    filePath: string;
-    urlPath: string;
+    filePath?: string;
+    urlPath?: string;
 }
 
 export const server: express.Express = express();

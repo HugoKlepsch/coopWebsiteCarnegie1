@@ -10,7 +10,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf build/*",
-    "compile": "tsc; cp -r serverAssets/ build/ && mkdir -p build/serverAssets/bootstrap/ && cp -r node_modules/bootstrap/dist/* build/serverAssets/bootstrap/",
+    "compile": "tsc; cp -r serverAssets/ build/ && mkdir -p build/serverAssets/bootstrap/ && cp -r node_modules/bootstrap/dist/* build/serverAssets/bootstrap/ && cp node_modules/jquery/dist/jquery.min.js build/serverAssets/bootstrap/js/",
     "lint": "tslint -p tsconfig.json --type-check",
     "serve": "node build/app.js",
     "ndb": "node inspect build/app.js",
@@ -30,6 +30,7 @@
     "convict": "^4.0.0",
     "express": "^4.15.3",
     "http-status-codes": "^1.3.0",
+    "jquery": "^3.2.1",
     "mime-types": "^2.1.17",
     "npm-run-all": "^4.0.2",
     "redis": "^2.8.0",
