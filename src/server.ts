@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as fs from 'fs';
 import * as statusCodes from 'http-status-codes';
 import * as mime from 'mime-types';
+import * as Mustache from 'mustache';
 import * as path from 'path';
 import * as URL from 'url';
 
@@ -158,7 +159,8 @@ server.get('/*', (req: IHttpRequest, res: express.Response, next: express.NextFu
         if (req.sendType === 'blog') {
             // Render and send blog
             // TODO
-            res.send('This is a blog post');
+            const rendered: string = renderBlogPost(req.filePath);
+            res.type('text/html').send(rendered);
         } else if (req.sendType === 'file') {
             // Send the file
             sendFile(req.filePath, res);
@@ -258,11 +260,21 @@ function sendInternalServerError(res: express.Response): void {
     res.sendStatus(statusCodes.INTERNAL_SERVER_ERROR);
 }
 
+// sendFile
+// TODO return buffer instead of sending here
+// TODO make async
 function sendFile(filename: string, res: express.Response): void {
     const text: Buffer = fs.readFileSync(filename, { flag: 'r' });
 
     const contentType = getFileMIME(filename);
     res.type(contentType).send(text);
+}
+
+// TODO async, docs,
+function renderBlogPost(filename: string): string {
+    const templateText: Buffer = fs.readFileSync(conf.get('templateDir') + 'blogml.template', {flag: 'r' });
+    const values: {} = JSON.parse(fs.readFileSync(filename, { flag: 'r' }).toString());
+    return Mustache.render(templateText.toString(), values);
 }
 
 function getFileMIME(filename: string): string {

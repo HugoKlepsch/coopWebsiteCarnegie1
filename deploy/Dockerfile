@@ -12,6 +12,7 @@ ENTRYPOINT ["/tini", "--"]
 
 
 ENV ASSETS_DIR=serverAssets/
+ENV TEMPLATE_DIR=renderTemplates/
 ENV PORT=8080
 
 EXPOSE 8080

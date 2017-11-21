@@ -3,3 +3,6 @@
 *.a
 le-docker-compose/
 node_modules/
+build/
+yarn-error.log
+yarn.lock

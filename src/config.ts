@@ -12,6 +12,16 @@ export let conf: convict.Config = convict({
         default: 'build/serverAssets/',
         env: 'ASSETS_DIR'
     },
+    templateDir: {
+        doc: 'The directory for all template files',
+        format: (path: string): void => {
+            if (!fs.existsSync(path)) {
+                throw new Error('TEMPLATE_DIR must be a valid path');
+            }
+        },
+        default: 'build/renderTemplates/',
+        env: 'TEMPLATE_DIR'
+    },
     logLevel: {
         doc: 'The log level mask. Masks log messages of a lower priority. 0 = no logs',
         format: 'int',
