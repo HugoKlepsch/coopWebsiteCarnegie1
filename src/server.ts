@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as statusCodes from 'http-status-codes';
 import * as mime from 'mime-types';
 import * as Mustache from 'mustache';
+import * as nodeYaml from 'node-yaml';
 import * as path from 'path';
 import * as URL from 'url';
 
@@ -15,6 +16,19 @@ export interface IHttpRequest extends express.Request {
     sendType?: 'blog'|'file';
     filePath?: string;
     urlPath?: string;
+}
+
+export interface IPhotoInsert {
+    filePath: string;
+    paragraphIndex; number;
+    style: string;
+}
+
+export interface IBlogValues {
+    blogTitle: string;
+    post: string;
+    postParagraphs: string[];
+    photoInserts: IPhotoInsert[];
 }
 
 export const server: express.Express = express();
@@ -273,7 +287,44 @@ function sendFile(filename: string, res: express.Response): void {
 // TODO async, docs,
 function renderBlogPost(filename: string): string {
     const templateText: Buffer = fs.readFileSync(conf.get('templateDir') + 'blogml.template', {flag: 'r' });
-    const values: {} = JSON.parse(fs.readFileSync(filename, { flag: 'r' }).toString());
+    const values: IBlogValues = nodeYaml.parse(fs.readFileSync(filename, { flag: 'r' }).toString());
+
+    values.post = '';
+    let paragraphIndex: number = 0;
+    values.photoInserts.sort((a: IPhotoInsert, b: IPhotoInsert): number => {
+        return b.paragraphIndex - a.paragraphIndex; // Sort backwards so pop() returns the first
+    });
+
+    values.postParagraphs.forEach((paragraph: string) => {
+        let breakFirstImage: boolean = false;
+
+        let i: number = 0;
+        while (i < values.photoInserts.length) {
+            const photoInsert: IPhotoInsert = values.photoInserts[i];
+
+            if (photoInsert.paragraphIndex <= paragraphIndex) {
+                if (!breakFirstImage) {
+                    values.post += '<br>';
+                    breakFirstImage = true;
+                }
+
+                values.post += Mustache.render(
+                    '<img class="img" src="{{{filePath}}}" style="{{{style}}}">',
+                    photoInsert);
+                values.photoInserts.splice(i, 1);
+                i -= 1;
+            }
+            i += 1;
+        }
+
+        if (breakFirstImage) {
+            values.post += '<br>';
+        }
+
+        values.post += '<p>' + paragraph + '</p>\n\n';
+
+        paragraphIndex += 1;
+    });
     return Mustache.render(templateText.toString(), values);
 }
 
