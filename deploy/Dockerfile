@@ -13,8 +13,9 @@ ENTRYPOINT ["/tini", "--"]
 
 ENV ASSETS_DIR=serverAssets/
 ENV TEMPLATE_DIR=renderTemplates/
-ENV PORT=8080
+ENV LOG_LEVEL=6
+ENV PORT=80
 
-EXPOSE 8080
+EXPOSE 80
 
 CMD ["node", "app.js"]

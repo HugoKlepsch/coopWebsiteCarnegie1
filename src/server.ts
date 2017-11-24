@@ -5,6 +5,7 @@ import * as mime from 'mime-types';
 import * as Mustache from 'mustache';
 import * as nodeYaml from 'node-yaml';
 import * as path from 'path';
+import * as toobusy from 'toobusy-js';
 import * as URL from 'url';
 
 import { cacheClient } from './cache';
@@ -12,26 +13,46 @@ import { conf } from './config';
 import * as logger from './logger';
 
 export interface IHttpRequest extends express.Request {
+    startTime: number;
+    hasCached: boolean;
     filePermission?: boolean;
     sendType?: 'blog'|'file';
     filePath?: string;
     urlPath?: string;
 }
 
-export interface IPhotoInsert {
-    filePath: string;
-    paragraphIndex; number;
-    style: string;
+export enum MediaType {
+    Paragraph = 'Paragraph', // <p>
+    Header = 'Header', // <h#>
+    Picture = 'Picture', // <img>
+    Code = 'Code', // <pre>
+    Arbitrary = 'Arbitrary' // Insert whatever html tag you want
 }
 
-export interface IBlogValues {
+export interface IMediaInsert {
+    mediaType: MediaType;
+    headerRank?: number;
+    filePath?: string;
+    mediaText?: string;
+    tagStyle?: string;
+    tagClass?: string;
+    tag?: string;
+}
+
+export interface IBlogRenderedValues {
+    navbar: string;
     blogTitle: string;
     post: string;
-    postParagraphs: string[];
-    photoInserts: IPhotoInsert[];
+}
+
+export interface IBlogRawValues {
+    blogTitle: string;
+    postMedia: IMediaInsert[];
 }
 
 export const server: express.Express = express();
+
+let eventLoopLag: number = toobusy.lag();
 
 const assetsDir = conf.get('assetsDir');
 
@@ -46,6 +67,17 @@ logger.log(logger.Level.INFO, {
 });
 
 const doCaching: boolean = conf.get('doCaching');
+
+// Request response time measurement middleware
+server.use((req: IHttpRequest, res: express.Response, next: express.NextFunction): void => {
+    logger.log(logger.Level.DEBUG, {
+        message: 'In timer redirector'
+    });
+
+    req.startTime = Date.now();
+
+    next();
+});
 
 // Redirector middleware
 server.use((req: IHttpRequest, res: express.Response, next: express.NextFunction): void => {
@@ -73,11 +105,13 @@ server.use((req: IHttpRequest, res: express.Response, next: express.NextFunction
 // computed to set the cache.
 server.use((req: IHttpRequest, res: express.Response, next: express.NextFunction): void => {
     // TODO
+    req.hasCached = false;
     if (doCaching) {
         cacheClient.get(name, (err: Error, cacheResponse: string) => {
             if (cacheResponse !== null) {
                 // Return cached result
                 // TODO
+                req.hasCached = true;
                 return; // Don't let the rest of the middlewares run
             } else {
                 // Not cached, continue
@@ -202,13 +236,17 @@ server.get('/*', (req: IHttpRequest, res: express.Response, next: express.NextFu
 // previous middlewares/handlers.
 server.use((req: IHttpRequest, res: express.Response, next: express.NextFunction): void => {
 
+    eventLoopLag = toobusy.lag();
+
     logger.log(logger.Level.INFO, {
-        http_method: req.method,
+        method: req.method,
         sendType: req.sendType,
-        uri_path: req.urlPath,
-        src_ip: req.connection.remoteAddress,
-        response_code: res.statusCode,
-        contentType: res.get('Content-Type')
+        cached: req.hasCached,
+        path: req.urlPath,
+        srcIP: req.connection.remoteAddress,
+        statusCode: res.statusCode,
+        respTime: Date.now() - req.startTime,
+        EL: eventLoopLag
     });
 
     next();
@@ -286,46 +324,73 @@ function sendFile(filename: string, res: express.Response): void {
 
 // TODO async, docs,
 function renderBlogPost(filename: string): string {
-    const templateText: Buffer = fs.readFileSync(conf.get('templateDir') + 'blogml.template', {flag: 'r' });
-    const values: IBlogValues = nodeYaml.parse(fs.readFileSync(filename, { flag: 'r' }).toString());
+    const templateText: Buffer = fs.readFileSync(conf.get('templateDir') + 'blogml.template', { flag: 'r' });
+    const navbarTemplate: Buffer = fs.readFileSync(conf.get('templateDir') + 'navbar.raw', { flag: 'r' });
 
-    values.post = '';
-    let paragraphIndex: number = 0;
-    values.photoInserts.sort((a: IPhotoInsert, b: IPhotoInsert): number => {
-        return b.paragraphIndex - a.paragraphIndex; // Sort backwards so pop() returns the first
-    });
+    const rawValues: IBlogRawValues = nodeYaml.parse(fs.readFileSync(filename, { flag: 'r' }).toString());
 
-    values.postParagraphs.forEach((paragraph: string) => {
-        let breakFirstImage: boolean = false;
+    const renderedValues: IBlogRenderedValues = {
+        blogTitle: rawValues.blogTitle,
+        navbar: navbarTemplate.toString(),
+        post: ''
+    };
 
-        let i: number = 0;
-        while (i < values.photoInserts.length) {
-            const photoInsert: IPhotoInsert = values.photoInserts[i];
+    let lastMediaType: MediaType = MediaType.Paragraph;
+    rawValues.postMedia.forEach((media: IMediaInsert) => {
+        if (media.mediaType !== lastMediaType) {
+            renderedValues.post += '<br>\n';
+        }
 
-            if (photoInsert.paragraphIndex <= paragraphIndex) {
-                if (!breakFirstImage) {
-                    values.post += '<br>';
-                    breakFirstImage = true;
-                }
-
-                values.post += Mustache.render(
-                    '<img class="img" src="{{{filePath}}}" style="{{{style}}}">',
-                    photoInsert);
-                values.photoInserts.splice(i, 1);
-                i -= 1;
+        if (media.mediaType === MediaType.Paragraph) {
+            // TODO add support for reading text from file
+            if (media.filePath !== undefined && media.filePath !== '') {
+                logger.log(logger.Level.WARN, {
+                    message: 'Reading text from file not yet supported'
+                });
             }
-            i += 1;
+
+            renderedValues.post += Mustache.render('<p>{{{mediaText}}}</p>\n', media);
+
+        } else if (media.mediaType === MediaType.Header) {
+            // TODO add support for reading text from file
+            if (media.filePath !== undefined && media.filePath !== '') {
+                logger.log(logger.Level.WARN, {
+                    message: 'Reading text from file not yet supported'
+                });
+            }
+
+            renderedValues.post += Mustache.render('<h{{{headerRank}}}>{{{mediaText}}}</h{{{headerRank}}}>\n', media);
+        } else if (media.mediaType === MediaType.Picture) {
+            renderedValues.post += Mustache.render(
+                '<img class="img {{{tagClass}}}" src="{{{filePath}}}" style="{{{tagStyle}}}">\n',
+                media);
+        } else if (media.mediaType === MediaType.Code) {
+            // TODO
+            if (media.filePath !== undefined && media.filePath !== '') {
+                logger.log(logger.Level.WARN, {
+                    message: 'Reading text from file not yet supported'
+                });
+            }
+
+            renderedValues.post += Mustache.render(
+                '<pre>{{{mediaText}}}</pre>\n',
+                media);
+
+        } else if (media.mediaType === MediaType.Arbitrary) {
+            logger.log(logger.Level.WARN, {
+                message: 'Arbitrary tag not yet supported'
+            });
+        } else {
+            logger.log(logger.Level.WARN, {
+                message: 'Inavlid mediaType',
+                mediaType: media.mediaType,
+                json: JSON.stringify(media)
+            });
         }
 
-        if (breakFirstImage) {
-            values.post += '<br>';
-        }
-
-        values.post += '<p>' + paragraph + '</p>\n\n';
-
-        paragraphIndex += 1;
+        lastMediaType = media.mediaType;
     });
-    return Mustache.render(templateText.toString(), values);
+    return Mustache.render(templateText.toString(), renderedValues);
 }
 
 function getFileMIME(filename: string): string {

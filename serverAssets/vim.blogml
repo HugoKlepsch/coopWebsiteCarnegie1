@@ -1,20 +1,23 @@
 blogTitle: Learning Vim
-postParagraphs:
-    - |+
+postMedia:
+    - mediaType: Paragraph
+      mediaText: |+
         This is the body of the post.
         Newlines are replaced by spaces in this format, but I can insert newlines
-    - here and
-    - here
-photoInserts:
-    - filePath: vim.png
-      paragraphIndex: 1
-      style: height:200px;
-    - filePath: vim.png
-      paragraphIndex: 1
-      style: height:200px;
-    - filePath: vim.png
-      paragraphIndex: 1
-      style: height:200px;
-    - filePath: vim.png
-      paragraphIndex: 1
-      style: height:200px;
+    - mediaType: Picture
+      filePath: vim.png
+      tagStyle: height:200px;
+    - mediaType: Picture
+      filePath: vim.png
+      tagStyle: height:200px;
+    - mediaType: Paragraph
+      mediaText: here and
+    - mediaType: Picture
+      filePath: vim.png
+      tagStyle: height:200px;
+    - mediaType: Paragraph
+      mediaText: here
+    - mediaType: Code
+      mediaText: |
+        This is an example of code
+        Multiple lines do not work
