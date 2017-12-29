@@ -17,6 +17,9 @@ postMedia:
       tagStyle: height:200px;
     - mediaType: Paragraph
       mediaText: here
+    - mediaType: Header
+      headerRank: 4
+      mediaText: Testing
     - mediaType: Code
       mediaText: |
         This is an example of code

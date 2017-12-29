@@ -31,7 +31,7 @@ export let conf: convict.Config = convict({
     port: {
         doc: 'The port to listen on',
         format: 'port',
-        default: 8080,
+        default: 8081,
         env: 'PORT'
     },
     doCaching: {

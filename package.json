@@ -20,7 +20,7 @@
     "docker:build": "yarn docker:config && docker build -t ctechwebsite:latest build",
     "docker:run": "docker run -p 8080:8080 ctechwebsite:latest",
     "docker:dump": "docker save -o dockerImage.img ctechwebsite:latest",
-    "docker:push": "docker save ctechwebsite:latest | bzip2 | ssh hugo@orion.hugo-klepsch.tech 'bunzip2 | docker load'"
+    "docker:push": "docker save ctechwebsite:latest | bzip2 | ssh hugo@blog.hugo-klepsch.tech 'bunzip2 | docker load'"
   },
   "author": "",
   "license": "MIT",
