@@ -1,0 +1,39 @@
+blogTitle: How to use email in an organization
+postMedia:
+    - mediaType: Picture
+      filePath: questions.png
+      tagStyle: height:250px;
+    - mediaType: Header
+      headerRank: 2
+      mediaText: The unlikely puzzle
+    - mediaType: Paragraph
+      mediaText: |+
+        Ever since I registered my first email account in 2007, I thought I knew everything about email.
+        It seemed so simple; you enter the recipients email address at the top, write a subject line and
+        then your message. When you hit send the magic of the internet and it's tubes effortlessly delivers
+        your message to your recipient's eyes instantly, who reads every word and replies with the same
+        care you had used.
+    - mediaType: Paragraph
+      mediaText: |+
+        It turns out that business emails don't work quite that way.
+    - mediaType: Picture
+      filePath: email.png
+      tagStyle: height:250px;
+    - mediaType: Header
+      headerRank: 2
+      mediaText: Email isn't webscale
+    - mediaType: Paragraph
+      mediaText: |+
+        The above method of sending emails may work for small numbers of friends trying to misuse email for
+        instant messaging, but it falls apart in a medium-large business setting. There's too many email
+        addresses to remember. The information being sent is too important and it's correspondence elapses
+        such a long time that it must be organized in some way.
+    - mediaType: Header
+      headerRank: 2
+      mediaText: Some rules
+    - mediaType: Header
+      headerRank: 3
+      mediaText: TO vs CC vs BCC
+    - mediaType: Header
+      headerRank: 3
+      mediaText: To reply-all or not to reply-all

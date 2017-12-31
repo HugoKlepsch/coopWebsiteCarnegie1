@@ -8,14 +8,16 @@
     <title>Put Doc title here</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" >
+    <link rel="stylesheet" type="text/css" href="/bootstrap.min.css" >
+    <!-- Edits to bootstrap default style -->
+    <link rel="stylesheet" type="text/css" href="/cssOverrides.css" >
 
   </head>
   <body>
       {{{navbar}}}
 
-    <div class="container" role="main">
-        <h2>{{blogTitle}}</h2>
+    <div style="padding-bottom:100px" class="container" role="main">
+        <h1>{{blogTitle}}</h1>
         {{{post}}}
     </div> <!-- /container -->
 

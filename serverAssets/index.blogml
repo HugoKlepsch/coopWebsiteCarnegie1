@@ -1,0 +1,23 @@
+blogTitle: Carnegie Technologies work term experiences
+postMedia:
+    - mediaType: Header
+      headerRank: 2
+      mediaText: Introduction
+    - mediaType: Paragraph
+      mediaText: |+
+        Welcome to my website that covers my eight month co-op employment with Carnegie Technologies
+        from May 2017 to December 2017.
+    - mediaType: Paragraph
+      mediaText: |+
+        My name is Hugo Klepsch, a third year student at the University of Guelph.
+    - mediaType: Picture
+      filePath: uog-full-logo.jpg
+      tagStyle: height:150px;
+    - mediaType: Picture
+      filePath: ctechlogo.jpg
+      tagStyle: height:150px;
+    - mediaType: Paragraph
+      mediaText: |+
+        This website was made to shed light on experiences and what I learned during my two work terms.
+        Furthermore, it will explain personal growth goals I set, technologies I used, and other business
+        skills I learned. 

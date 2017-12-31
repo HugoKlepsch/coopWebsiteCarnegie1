@@ -88,12 +88,12 @@ server.use((req: IHttpRequest, res: express.Response, next: express.NextFunction
         urlPath: req.urlPath
     });
 
-    if (req.urlPath === '/') {
+    if (req.urlPath === '/' || req.urlPath === '/index.html') {
         logger.log(logger.Level.INFO, {
             message: 'Redirecting to index.html',
             urlPath: req.urlPath
         });
-        res.redirect('index.html');
+        res.redirect('index.blogml');
         return;
     }
 

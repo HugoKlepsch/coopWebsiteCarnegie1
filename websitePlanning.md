@@ -20,8 +20,10 @@
 * Kubernetes
 * Let's encrypt
 * Gerrit
+* Git
 * Jenkins
 * Cassandra
+* Pull requests and open source
 
 # Website archtitecture
 
