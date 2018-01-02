@@ -362,7 +362,7 @@ function renderBlogPost(filename: string): string {
             renderedValues.post += Mustache.render('<h{{{headerRank}}}>{{{mediaText}}}</h{{{headerRank}}}>\n', media);
         } else if (media.mediaType === MediaType.Picture) {
             renderedValues.post += Mustache.render(
-                '<img class="img {{{tagClass}}}" src="{{{filePath}}}" style="{{{tagStyle}}}">\n',
+                '<img class="img-responsive {{{tagClass}}}" src="{{{filePath}}}" style="{{{tagStyle}}}">\n',
                 media);
         } else if (media.mediaType === MediaType.Code) {
             // TODO
