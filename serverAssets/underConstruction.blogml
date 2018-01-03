@@ -1,0 +1,12 @@
+blogTitle: UNDER CONSTRUCTION
+postMedia:
+    - mediaType: Paragraph
+      mediaText: |+
+        This website is under construction
+    - mediaType: Picture
+      filePath: UC1.png
+      tagStyle: height:350px;
+    - mediaType: Picture
+      filePath: UC2.png
+      tagStyle: height:350px;
+
