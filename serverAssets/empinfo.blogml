@@ -1,0 +1,32 @@
+blogTitle: Employer info
+postMedia:
+    - mediaType: Header
+      headerRank: 2
+      mediaText: About Carnegie technologies
+    - mediaType: Picture
+      filePath: ctechlogo.jpg
+      tagStyle: height:150px;
+    - mediaType: Paragraph
+      mediaText: |+
+        Carnegie technologies is a multinational corporation founded in 2010. It focuses most of it's
+        products in the IoT and radio technology markets, with some products innovating internet protocols.
+    - mediaType: Paragraph
+      mediaText: |+
+        The office I worked at (Kitchener, ON) was formerly Pravala networks; a startup developing innovative
+        proprietary extensions to internet protocols that allowed for bandwidth to be aggregated between
+        multiple internet links. This technology can be applied in many ways, including connected vehicles. 
+    - mediaType: Picture
+      filePath: connCar.png
+      tagStyle: width:100%;
+    - mediaType: Paragraph
+      mediaText: |+
+        In addition to their networking products, Carnegie also develops a IoT product used for tracking and
+        managing farm animals and equipment.
+    - mediaType: Paragraph
+      mediaText: |+
+        The Kitchener office is a very small team considering it's output, therefore the team needs to
+        extensively use automation wherever possible. Automated testing and continuous integration is just
+        the start of the automation used at Carnegie. All production and development deployments are fully
+        automated, including scaling. Furthermore, all services and build servers are containerized to allow
+        consistent, atomic builds and deployments.
+

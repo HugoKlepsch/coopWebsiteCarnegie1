@@ -27,7 +27,7 @@
                       <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Work term report<span class="caret"></span></a>
                           <ul class="dropdown-menu">
-                              <li><a href="underConstruction.blogml">Employer information</a></li>
+                              <li><a href="empinfo.blogml">Employer information</a></li>
                               <li><a href="underConstruction.blogml">Job description and duties</a></li>
                               <li><a href="underConstruction.blogml">Technologies used</a></li>
                               <li><a href="underConstruction.blogml">Goals</a></li>
