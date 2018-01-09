@@ -20,4 +20,14 @@ postMedia:
       mediaText: Other tooling
     - mediaType: Paragraph
       mediaText: |+
+        Carnegie technologies, and the kitchener office in particular, do not have enough staff to be
+        inefficient. We looked for inefficiencies at every step in our production pipeline:
+    - mediaType: Code
+      mediaText: |
+        - Onboarding new developers to projects can be confusing and slow if there's no documentation
+            about what dependencies the project needs, or how it builds. This can make the new developer
+            discouraged, and less likely to be engaged or devoted to the project.
+        - Slow or complicated build steps can slow down iteration frequency massively. Ensuring that project
+            builds are as fast as they can be is important to help keep the developer busy and his/her mind
+            active.
 
