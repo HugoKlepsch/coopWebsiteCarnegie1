@@ -8,3 +8,8 @@
 {
     max-height: 100%;
 }
+
+.ucdivbg
+{
+    background: linear-gradient(rgba(255,255,255,1), rgba(255,255,255,.9)), url('chevron.jpg') repeat;
+}
