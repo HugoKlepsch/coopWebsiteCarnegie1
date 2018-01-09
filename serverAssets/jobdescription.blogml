@@ -3,31 +3,77 @@ postMedia:
     - mediaType: Header
       headerRank: 2
       mediaText: Production services
+
     - mediaType: Header
-      headerRank: 4
+      headerRank: 3
       mediaText: Native and node.js RabbitMQ microservices
+
     - mediaType: Header
-      headerRank: 4
+      headerRank: 3
       mediaText: Node.js HTTP microservices
+
     - mediaType: Header
       headerRank: 2
       mediaText: Internal tooling
+
     - mediaType: Header
-      headerRank: 4
+      headerRank: 3
       mediaText: Containerization and orchestration of services
+
     - mediaType: Header
-      headerRank: 4
+      headerRank: 3
       mediaText: Other tooling
     - mediaType: Paragraph
       mediaText: |+
-        Carnegie technologies, and the kitchener office in particular, do not have enough staff to be
+        Carnegie technologies, and the Kitchener office in particular, do not have enough staff to be
         inefficient. We looked for inefficiencies at every step in our production pipeline:
-    - mediaType: Code
-      mediaText: |
-        - Onboarding new developers to projects can be confusing and slow if there's no documentation
-            about what dependencies the project needs, or how it builds. This can make the new developer
-            discouraged, and less likely to be engaged or devoted to the project.
-        - Slow or complicated build steps can slow down iteration frequency massively. Ensuring that project
-            builds are as fast as they can be is important to help keep the developer busy and his/her mind
-            active.
+
+    - mediaType: Header
+      headerRank: 4
+      mediaText: Onboarding
+    - mediaType: Paragraph
+      mediaText: |+
+        Onboarding new developers to projects can be confusing and slow if there's no documentation
+        about what dependencies the project needs, or how it builds. This can make the new developer
+        discouraged, and less likely to be engaged or devoted to the project.
+    - mediaType: Paragraph
+      mediaText: |+
+        To make this process easier, I ensured each project would have an updated README that included
+        all the commands needed to set up a development environment.
+
+    - mediaType: Header
+      headerRank: 4
+      mediaText: Build scripts
+    - mediaType: Paragraph
+      mediaText: |+
+        Slow or complicated build steps can slow down iteration frequency massively. Ensuring that
+        project builds are as fast as they can be is important to help keep the developer busy and
+        his/her mind active.
+    - mediaType: Paragraph
+      mediaText: |+
+        One of the ways I sped up build times was by transitioning our node.js services' package manager
+        from npm to yarn. Yarn <a href="https://www.berriart.com/blog/2016/10/npm-yarn-benchmark/">
+        has been shown to be faster than npm</a> and reduced the time it took our CI builds to install
+        packages and test by 30%.
+    - mediaType: Paragraph
+      mediaText: |+
+        I also removed duplicated git submodules and added caching wherever possible. One of our longest
+        build times were the hybrid apps that used cordova and ionic. A large portion of the build time
+        was spent installing the same npm packages several times for each configuration of the build.
+        To reduce the time taken by that build step I installed the packages in the build server container's
+        cache, reducing build time by 50%.
+    - mediaType: Paragraph
+      mediaText: |+
+        I also improved many services Dockerfiles by changing the order of the commands used to build the
+        image. By moving the commands that invalidated the build cache to the end, more of the build steps
+        could be cached, reducing build time.
+
+    - mediaType: Header
+      headerRank: 4
+      mediaText: Automated testing
+    - mediaType: Paragraph
+      mediaText: |+
+        When patch sets are uploaded into the code review suite, automatic tests can help catch simple
+        mistakes and reduce the number of reviews a reviewer needs to make. Furthermore, integration
+        and unit tests can help catch unforeseen side-effects of a patch set.
 
