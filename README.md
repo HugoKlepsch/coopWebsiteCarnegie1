@@ -2,7 +2,7 @@
 
 This repo is for the planning and development of my website.
 
-The website will be the blog for the first four months of my first coop, Carnegie technologies. (may 2017 - Sept 2017)
+The website will be the blog for my first coop, Carnegie technologies. (may 2017 - December 2017)
 
 
 
