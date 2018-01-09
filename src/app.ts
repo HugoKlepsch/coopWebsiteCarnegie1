@@ -17,4 +17,6 @@ process.on('exit', () => {
     logger.log(logger.Level.INFO, {message: 'Server shutdown'});
 });
 
-process.on('SIGINT', process.exit);
+process.on('SIGINT', () => {
+    process.exit();
+});
