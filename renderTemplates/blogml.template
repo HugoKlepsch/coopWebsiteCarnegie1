@@ -20,12 +20,11 @@
         <h1>{{blogTitle}}</h1>
         {{{post}}}
     </div> <!-- /container -->
-    <br>
-    <hr>
+
     <br>
 
-    <div class="ucdivbg" style="padding-bottom:100px" role="main">
-        <div class="container" style="padding-bottom:100px" role="main">
+    <div class="ucdivbg" style="" role="main">
+        <div class="container" style="padding-bottom:30px" role="main">
             <h3>This website is under construction.</h3>
             <h3>Follow it's progress on <a href="https://github.com/HugoKlepsch/coopWebsiteCarnegie1">Github</a></h3>
         </div>
