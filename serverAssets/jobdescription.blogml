@@ -1,0 +1,23 @@
+blogTitle: Job description & duties
+postMedia:
+    - mediaType: Header
+      headerRank: 2
+      mediaText: Production services
+    - mediaType: Header
+      headerRank: 4
+      mediaText: Native and node.js RabbitMQ microservices
+    - mediaType: Header
+      headerRank: 4
+      mediaText: Node.js HTTP microservices
+    - mediaType: Header
+      headerRank: 2
+      mediaText: Internal tooling
+    - mediaType: Header
+      headerRank: 4
+      mediaText: Containerization and orchestration of services
+    - mediaType: Header
+      headerRank: 4
+      mediaText: Other tooling
+    - mediaType: Paragraph
+      mediaText: |+
+
