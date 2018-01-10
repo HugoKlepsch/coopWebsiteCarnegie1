@@ -1,5 +1,9 @@
 blogTitle: Job description & duties
 postMedia:
+    - mediaType: Paragraph
+      mediaText: |+
+        Most of my work focused on either writing and maintaining microservices as part of a larger system,
+        or writing internal tools and automating development processes.
     - mediaType: Header
       headerRank: 2
       mediaText: Production services
@@ -7,29 +11,74 @@ postMedia:
     - mediaType: Header
       headerRank: 3
       mediaText: Native and node.js RabbitMQ microservices
+    - mediaType: Paragraph
+      mediaText: |+
+        Most of the services I worked on used RabbitMQ as their means of communication with one another.
+        I wrote C++ and node.js libraries that wrapped the basic AMQP calls into higher level patterns and
+        constructs such as 'Consumer', 'Requester' and 'Broadcaster'.
+    - mediaType: Picture
+      filePath: rabbitmq.png
+      tagStyle: height:150px;
+    - mediaType: Paragraph
+      mediaText: |+
+        Once these libraries were written I migrated existing services to use them, and wrote additional
+        services to use them. Once of the services was a C++ service to retrieve and parse GPS ephemeris
+        data, and make it available to other services that need it. This service implemented both the
+        'Consumer' and 'Broadcaster' pattern.
 
     - mediaType: Header
       headerRank: 3
       mediaText: Node.js HTTP microservices
+    - mediaType: Picture
+      filePath: node.png
+      tagStyle: height:150px;
+    - mediaType: Paragraph
+      mediaText: |+
+        One of the node.js HTTP services I wrote was a certificate signing service. One of our products
+        required each client use a certificate generate by our certificate authority. The service used
+        node.js's express library to receive connections and responded with a generated certificate.
 
     - mediaType: Header
       headerRank: 2
       mediaText: Internal tooling
+    - mediaType: Paragraph
+      mediaText: |+
+        Carnegie technologies, and the Kitchener office in particular, do not have enough staff to be
+        inefficient. I looked for inefficiencies at every step in our production pipeline:
 
     - mediaType: Header
       headerRank: 3
       mediaText: Containerization and orchestration of services
+    - mediaType: Paragraph
+      mediaText: |+
+        The project I worked on had a collection of small components that all needed to be made aware of
+        each other. Not only was setting up the services time consuming and error prone, scaling was almost
+        impossible.
+    - mediaType: Picture
+      filePath: kubernetes.png
+      tagStyle: height:147px;
+    - mediaType: Paragraph
+      mediaText: |+
+        One of my tasks was to improve this process so that a production environment could be installed and
+        configured easily. This would facilitate proof of concept (POC) installations, and help developers
+        more quickly test. I selected Docker + Kubernetes + Helm for this task. Docker is a way of packaging
+        a single service and all it's dependencies together, and run it in it's own environment. Kubernetes
+        is a way of orchestrating and scaling docker containers automatically across many host nodes.
+        Kubernetes handles linking the services together by creating it's own virtual DNS system. Helm is a
+        tool for orchestrating Kubernetes by templating service configuration files. Containerizing of a
+        project was usually completed in three steps: dockerizing services, configuring services with
+        Kubernetes, and orchestrating Kubernetes with Helm.
+    - mediaType: Picture
+      filePath: docker.png
+      tagStyle: height:150px;
+    - mediaType: Paragraph
+      mediaText: |+
+        This allowed developers to install a new sandboxed production environment on their own machines in
+        1-2 commands, and greatly reduced the time it took to set up a proof of concept for prospective
+        customers.
 
     - mediaType: Header
       headerRank: 3
-      mediaText: Other tooling
-    - mediaType: Paragraph
-      mediaText: |+
-        Carnegie technologies, and the Kitchener office in particular, do not have enough staff to be
-        inefficient. We looked for inefficiencies at every step in our production pipeline:
-
-    - mediaType: Header
-      headerRank: 4
       mediaText: Onboarding
     - mediaType: Paragraph
       mediaText: |+
@@ -40,10 +89,10 @@ postMedia:
       mediaText: |+
         To make this process easier, I ensured each project would have an updated README that included
         all the commands needed to set up a development environment. Furthermore, I created a consistently
-        named script for each project that would install the dependencies on supported platforms. 
+        named script for each project that would install the dependencies on supported platforms.
 
     - mediaType: Header
-      headerRank: 4
+      headerRank: 3
       mediaText: Build scripts
     - mediaType: Paragraph
       mediaText: |+
@@ -66,9 +115,6 @@ postMedia:
         was spent installing the same npm packages several times for each configuration of the build.
         To reduce the time taken by that build step I installed the packages in the build server container's
         cache, reducing build time by 50%.
-    - mediaType: Picture
-      filePath: docker.png
-      tagStyle: height:150px;
     - mediaType: Paragraph
       mediaText: |+
         I also improved many services Dockerfiles by changing the order of the commands used to build the
@@ -80,7 +126,7 @@ postMedia:
         existing projects.
 
     - mediaType: Header
-      headerRank: 4
+      headerRank: 3
       mediaText: Automated testing
     - mediaType: Paragraph
       mediaText: |+
@@ -93,3 +139,24 @@ postMedia:
         C++ projects, and mocha for node.js projects. These tests, combined with the above build scripts
         provided a robust and trustworthy build system.
 
+    - mediaType: Header
+      headerRank: 3
+      mediaText: Automating tasks
+    - mediaType: Paragraph
+      mediaText: |+
+        Most of the build process for mobile apps was hands-off from uploading a patch set to user testing,
+        except the stage of uploading the app to the testing site. I was tasked with creating a 'smart'
+        upload tool. It had to:
+    - mediaType: Paragraph
+      mediaText: |+
+        - Support iOS and android app formats
+    - mediaType: Paragraph
+      mediaText: |+
+        - Upload only when the app's version is greater than existing versions in HockeyApp (app testing site)
+    - mediaType: Paragraph
+      mediaText: |+
+        - Notify testers that there is a new version
+    - mediaType: Paragraph
+      mediaText: |+
+        I wrote a set of java classes that queried the HockeyApp API and determined the version of a given
+        .apk or .ipa. The tool was then deployed as part of our continuous integration system.
