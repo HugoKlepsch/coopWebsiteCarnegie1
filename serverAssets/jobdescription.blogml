@@ -157,6 +157,9 @@ postMedia:
     - mediaType: Paragraph
       mediaText: |+
         - Notify testers that there is a new version
+    - mediaType: Picture
+      filePath: hockeyapp.png
+      tagStyle: height:150px;
     - mediaType: Paragraph
       mediaText: |+
         I wrote a set of java classes that queried the HockeyApp API and determined the version of a given
