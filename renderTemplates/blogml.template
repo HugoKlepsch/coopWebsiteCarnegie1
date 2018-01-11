@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="/cssOverrides.css" >
 
   </head>
-  <body style="min-height:100vh; position:relative; margin:0; padding-bottom:50px;">
+  <body style="min-height:100vh; position:relative; margin:0; padding-bottom:75px;">
       {{{navbar}}}
 
     <div style="padding-bottom:100px" class="container" role="main">
