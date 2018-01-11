@@ -1,0 +1,105 @@
+blogTitle: Goals
+pageUnderConstruction: false
+postMedia:
+    - mediaType: Header
+      headerRank: 2
+      mediaText: Learn
+    - mediaType: Header
+      headerRank: 4
+      mediaText: A real job
+    - mediaType: Paragraph
+      mediaText: |+
+        My main goal for my time at Carnegie was to learn what a real software development job would be like.
+        With respect to a real job, I learned how to express my progress and hangups during stand-up meetings,
+        how team management techniques are applied in practice, and that customer requirements aren't always
+        clear.
+    - mediaType: Header
+      headerRank: 4
+      mediaText: Strange and awesome technologies
+    - mediaType: Picture
+      filePath: CMake.png
+      tagStyle: height:150px;
+    - mediaType: Paragraph
+      mediaText: |+
+        Another goal I had was to learn as many technologies as I could. I exceeded my highest expectations
+        with the number and depth of my learning these past 8 months. I gained lots of experience designing,
+        writing, and maintaining node.js applications. I also learned about event-loop and callback based
+        programming, something which was completely alien to me when I began. I also learned about different
+        database types like noSQL vs SQL and some tips on when you choose each. Furthermore I learned about
+        interprocess communication (IPC) methods like Berkeley sockets and RabbitMQ. I was also happy to
+        learn how to use CMake properly in a large project -- no more manual Makefiles!
+    - mediaType: Header
+      headerRank: 4
+      mediaText: No plan survives first contact with the enemy
+    - mediaType: Paragraph
+      mediaText: |+
+        A hard learned rule is 'hardware integration is not trivial'. I though assembling a new generation
+        of IoT devices wouldn't be too difficult; everything is consumer components -- it should be plug
+        and play! As is often the case with integration testing, things to not always go as planned.
+        Don't be afraid to dive deep into the Linux kernel source, email maintainers, and scotch tape over
+        a few connector contacts. :)
+    - mediaType: Header
+      headerRank: 4
+      mediaText: Exciting upcoming technologies
+    - mediaType: Picture
+      filePath: docker.png
+      tagStyle: height:150px;
+    - mediaType: Paragraph
+      mediaText: |+
+        One of the technologies that I'm most excited to learn about is Docker; a program containerization
+        system. After seeing how Docker is applied to Carnegie's services, I have been adding docker
+        support to all my new projects and some open source projects.
+    - mediaType: Header
+      headerRank: 4
+      mediaText: Software project architecture
+    - mediaType: Paragraph
+      mediaText: |+
+        I worked with some very smart people who were generous enough to let me tag along to architectural
+        design meetings and explain why they made their technical choices. I don't think I could design a
+        similarly large system as effectively as they could, but I think I have a much better intuition now.
+        I'm almost in awe at how smart my coworkers were, and I hope I have learned some of their skill
+        through osmosis.
+    - mediaType: Header
+      headerRank: 4
+      mediaText: Jacket on, jacket off
+    - mediaType: Picture
+      filePath: jacketOnJacketOff.jpg
+      tagStyle: height:150px;
+    - mediaType: Paragraph
+      mediaText: |+
+        I used to think I was moderately competent in git, but now I feel 20 times more capable.
+        I also don't think I will ever forget how 'git rebase' works for as long as I live. :)
+    - mediaType: Header
+      headerRank: 2
+      mediaText: Act
+    - mediaType: Header
+      headerRank: 4
+      mediaText: Learn the value of a review
+    - mediaType: Picture
+      filePath: codeReviewFace.jpg
+      tagStyle: height:150px;
+    - mediaType: Paragraph
+      mediaText: |+
+        I learned to value code reviews more once I internalized that one of my co-workers had to stop
+        what they were otherwise doing to evaluate and understand what I wrote. I realize now that
+        reviews are valuable and should not be wasted with easy to catch mistakes. When the reviewer
+        knows that you consider their review valuable, they are likely to do your review sooner.
+    - mediaType: Header
+      headerRank: 4
+      mediaText: Communication with team
+    - mediaType: Paragraph
+      mediaText: |+
+        Once I started writing down exactly the things I had accomplished, I realized how many things
+        I forget I even worked on. Preparing what you have to say before stand-ups helped reduce
+        my meeting times and improve the communication within the team. As a result I don’t have to focus
+        on what I have to say during the meeting, and instead can focus on what my coworkers are saying.
+        This helped my better understand the overall system that we were working on.
+    - mediaType: Header
+      headerRank: 4
+      mediaText: Be more involved in project design
+    - mediaType: Paragraph
+      mediaText: |+
+        I improved my involvement in project meetings by attending additional meetings like sprint
+        planning meetings. There I could see the tasks that needed to be done during the sprint and
+        which tasks where still left to do. While there I learned the reasons why the team had to
+        switch database systems during a critical time in development.
