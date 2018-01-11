@@ -43,11 +43,13 @@ export interface IBlogRenderedValues {
     navbar: string;
     blogTitle: string;
     post: string;
+    underConstructionFooter: string;
 }
 
 export interface IBlogRawValues {
     blogTitle: string;
     postMedia: IMediaInsert[];
+    pageUnderConstruction: boolean;
 }
 
 export const server: express.Express = express();
@@ -326,13 +328,23 @@ function sendFile(filename: string, res: express.Response): void {
 function renderBlogPost(filename: string): string {
     const templateText: Buffer = fs.readFileSync(conf.get('templateDir') + 'blogml.template', { flag: 'r' });
     const navbarTemplate: Buffer = fs.readFileSync(conf.get('templateDir') + 'navbar.raw', { flag: 'r' });
+    const underConstructionFooterTemplate: Buffer = fs.readFileSync(conf.get('templateDir') +
+        'underConstructionFooter.raw', { flag: 'r' });
 
     const rawValues: IBlogRawValues = nodeYaml.parse(fs.readFileSync(filename, { flag: 'r' }).toString());
+
+    let underConstructionFooterTemplateString: string = '';
+    if (rawValues.pageUnderConstruction === false) {
+        underConstructionFooterTemplateString = '';
+    } else {
+        underConstructionFooterTemplateString = underConstructionFooterTemplate.toString();
+    }
 
     const renderedValues: IBlogRenderedValues = {
         blogTitle: rawValues.blogTitle,
         navbar: navbarTemplate.toString(),
-        post: ''
+        post: '',
+        underConstructionFooter: underConstructionFooterTemplateString
     };
 
     let lastMediaType: MediaType = MediaType.Paragraph;

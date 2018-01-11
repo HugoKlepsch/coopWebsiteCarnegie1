@@ -1,4 +1,5 @@
 blogTitle: Employer info
+pageUnderConstruction: false
 postMedia:
     - mediaType: Header
       headerRank: 2
@@ -14,7 +15,7 @@ postMedia:
       mediaText: |+
         The office I worked at (Kitchener, ON) was formerly Pravala networks; a startup developing innovative
         proprietary extensions to internet protocols that allowed for bandwidth to be aggregated between
-        multiple internet links. This technology can be applied in many ways, including connected vehicles. 
+        multiple internet links. This technology can be applied in many ways, including connected vehicles.
     - mediaType: Picture
       filePath: connCar.png
       tagStyle: width:100%;

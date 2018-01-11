@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="/cssOverrides.css" >
 
   </head>
-  <body>
+  <body style="min-height:100vh; position:relative; margin:0; padding-bottom:50px;">
       {{{navbar}}}
 
     <div style="padding-bottom:100px" class="container" role="main">
@@ -21,14 +21,7 @@
         {{{post}}}
     </div> <!-- /container -->
 
-    <br>
-
-    <div class="ucdivbg" style="" role="main">
-        <div class="container" style="padding-bottom:30px" role="main">
-            <h3>This website is under construction.</h3>
-            <h3>Follow it's progress on <a href="https://github.com/HugoKlepsch/coopWebsiteCarnegie1">Github</a></h3>
-        </div>
-    </div>
+    {{{underConstructionFooter}}}
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="../bootstrap/js/jquery.min.js"></script>

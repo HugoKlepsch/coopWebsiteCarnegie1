@@ -5,8 +5,8 @@ postMedia:
       mediaText: Introduction
     - mediaType: Paragraph
       mediaText: |+
-        Welcome to my website that covers my eight month co-op employment with Carnegie Technologies
-        from May 2017 to December 2017.
+        Welcome to my website that covers my eight month co-op employment with
+        <a href="empinfo.blogml">Carnegie Technologies</a> from May 2017 to December 2017.
     - mediaType: Paragraph
       mediaText: |+
         My name is Hugo Klepsch, a third year student at the University of Guelph.
@@ -18,6 +18,7 @@ postMedia:
       tagStyle: height:150px;
     - mediaType: Paragraph
       mediaText: |+
-        This website was made to shed light on experiences and what I learned during my two work terms.
-        Furthermore, it will explain personal growth goals I set, technologies I used, and other business
-        skills I learned. 
+        This website was made to shed light on <a href="jobdescription.blogml">experiences and what I
+        learned</a> during my two work terms. Furthermore, it will explain
+        <a href="goals.blogml">personal growth goals</a> I set, technologies I used, and other business
+        skills I learned.
