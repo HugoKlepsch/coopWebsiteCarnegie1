@@ -1,24 +1,43 @@
-blogTitle: Carnegie Technologies work term experiences
+blogTitle: Hugo Klepsch co-op work term experiences
 postMedia:
     - mediaType: Header
       headerRank: 2
       mediaText: Introduction
     - mediaType: Paragraph
       mediaText: |+
-        Welcome to my website that covers my eight month co-op employment with
-        <a href="empinfo.blogml">Carnegie Technologies</a> from May 2017 to December 2017.
+        Welcome to my website!
     - mediaType: Paragraph
       mediaText: |+
-        My name is Hugo Klepsch, a third year student at the University of Guelph.
+        Here you will find my work term reports for my co-op terms while a
+        student at the University of Guelph.
+    - mediaType: Arbitrary
+      mediaText: |+
+        <ul>
+        <li><a href="/workTerm1/empinfo.blogml">Carnegie Technologies</a>
+        from May 2017 to December 2017 </li>
+        <img class="img-responsive " src="/workTerm1/ctechlogo.jpg"
+        style="height:100px;">
+        <li><a href="/workTerm2/empinfo.blogml">Arctic Wolf Networks</a>
+        from May 2018 to August 2018 </li>
+        <img class="img-responsive "
+        src="/workTerm2/AWN_Logo_Main_Alt_4xdark.png" style="height:100px;">
+        </ul>
     - mediaType: Picture
-      filePath: uog-full-logo.jpg
+      filePath: /uog-full-logo.jpg
       tagStyle: height:150px;
-    - mediaType: Picture
-      filePath: ctechlogo.jpg
-      tagStyle: height:150px;
+    - mediaType: Header
+      headerRank: 2
+      mediaText: About me
     - mediaType: Paragraph
       mediaText: |+
-        This website was made to shed light on <a href="jobdescription.blogml">experiences and what I
+        My name is Hugo Klepsch,
+        a fourth year student at the University of Guelph. I love to design
+        things people will never notice.
+    - mediaType: Paragraph
+      mediaText: |+
+        This website was made to shed light on
+        <a href="/workTerm1/jobdescription.blogml"> experiences and what I
         learned</a> during my two work terms. Furthermore, it will explain
-        <a href="goals.blogml">personal growth goals</a> I set, technologies I used, and other business
-        skills I learned.
+        <a href="/workTerm1/goals.blogml">personal growth goals</a> I set,
+        <a href="/workTerm1/jobdescription.blogml">technologies I used</a>,
+        and other business skills I learned.

@@ -1,0 +1,24 @@
+blogTitle: Conclusion
+pageUnderConstruction: false
+postMedia:
+    - mediaType: Paragraph
+      mediaText: |+
+        I think Carnegie technologies was almost ideal as a first co-op experience. It was a small team,
+        so I was immediately thrust into the heart of the action, and treated like any employee.
+        Once I familiarized myself with the workings of the company and it's products, my opinions and
+        feedback were heard and respected like the other team members. The small size of the team allowed
+        me to have a lot of responsibilities and interesting tasks.
+    - mediaType: Paragraph
+      mediaText: |+
+        I really enjoyed getting to work on not only internal tools, but also production ready external
+        systems.
+    - mediaType: Picture
+      filePath: awesome.png
+      tagStyle: height:250px;
+    - mediaType: Paragraph
+      mediaText: |+
+        The Carnegie team has been really suportive and helpful throughout my time there. They were
+        always glad to help me learn new technologies and use them in my own projects. I'd like to thank
+        specifically Josh for always being available to discuss and make sure I understand, Severn for
+        introducing me to some of the intricacies of C++, and Nicholas for bringing me on board an
+        awesome team.

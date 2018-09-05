@@ -95,7 +95,7 @@ server.use((req: IHttpRequest, res: express.Response, next: express.NextFunction
             message: 'Redirecting to index.html',
             urlPath: req.urlPath
         });
-        res.redirect('index.blogml');
+        res.redirect('/index.blogml');
         return;
     }
 
@@ -389,9 +389,7 @@ function renderBlogPost(filename: string): string {
                 media);
 
         } else if (media.mediaType === MediaType.Arbitrary) {
-            logger.log(logger.Level.WARN, {
-                message: 'Arbitrary tag not yet supported'
-            });
+            renderedValues.post += media.mediaText;
         } else {
             logger.log(logger.Level.WARN, {
                 message: 'Inavlid mediaType',
