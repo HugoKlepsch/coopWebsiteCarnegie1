@@ -153,7 +153,7 @@ server.use((req: IHttpRequest, res: express.Response, next: express.NextFunction
         req.filePath = filePath;
 
         logger.log(logger.Level.DEBUG, {
-            message: 'File failed permissions check',
+            message: 'File passed permissions check',
             filePath
         });
 
@@ -161,7 +161,7 @@ server.use((req: IHttpRequest, res: express.Response, next: express.NextFunction
         req.filePermission = false;
 
         logger.log(logger.Level.DEBUG, {
-            message: 'File passed permissions check',
+            message: 'File failed permissions check',
             filePath
         });
 

@@ -6,100 +6,99 @@ postMedia:
       mediaText: Learn
     - mediaType: Header
       headerRank: 4
-      mediaText: A real job
+      mediaText: A medium-large organization
     - mediaType: Paragraph
       mediaText: |+
-        My main goal for my time at Carnegie was to learn what a real software development job would be like.
-        With respect to a real job, I learned how to express my progress and hangups during stand-up meetings,
-        how team management techniques are applied in practice, and that customer requirements aren't always
-        clear.
+        One of my goals for my time at Arctic Wolf Networks was to learn what
+        working at a larger organization would be like.
+        I was surprised to learn I did not lose much if any responsibility when
+        moving to a larger company. It seems larger organizations simply have
+        more things on their plate at once. I still went to standup and
+        influenced decisions. I was still able to directly impact production
+        services and thus the customer.
     - mediaType: Header
       headerRank: 4
-      mediaText: Strange and awesome technologies
+      mediaText: Fantastic technologies!
     - mediaType: Picture
-      filePath: CMake.png
+      filePath: python.png
       tagStyle: height:150px;
     - mediaType: Paragraph
       mediaText: |+
-        Another goal I had was to learn as many technologies as I could. I exceeded my highest expectations
-        with the number and depth of my learning these past 8 months. I gained lots of experience designing,
-        writing, and maintaining node.js applications. I also learned about event-loop and callback based
-        programming, something which was completely alien to me when I began. I also learned about different
-        database types like noSQL vs SQL and some tips on when you choose each. Furthermore I learned about
-        interprocess communication (IPC) methods like Berkeley sockets and RabbitMQ. I was also happy to
-        learn how to use CMake properly in a large project -- no more manual Makefiles!
+        Another goal I had was to learn as many technologies as I could.
+        I met my expectations with the depth of my learning these past 4
+        months. I gained lots of experience designing, writing, and maintaining
+        python and Java applications. I also learned about complex event
+        processing and streaming data, something which was completely alien to
+        me when I began. I also learned about software reliability engineering
+        and how to effectively use SRIs, SLOs, and SLAs to improve application
+        reliability.
     - mediaType: Header
       headerRank: 4
-      mediaText: No plan survives first contact with the enemy
+      mediaText: Garbage collection is not fire and forget
     - mediaType: Paragraph
       mediaText: |+
-        A hard learned rule is 'hardware integration is not trivial'. I though assembling a new generation
-        of IoT devices wouldn't be too difficult; everything is consumer components -- it should be plug
-        and play! As is often the case with integration testing, things to not always go as planned.
-        Don't be afraid to dive deep into the Linux kernel source, email maintainers, and scotch tape over
-        a few connector contacts. :)
+        If there's one takeaway from my time at Arctic Wolf Networks, it is that
+        using a garbage collected language does not preclude you from memory
+        management. Every resource created must be collected one way or
+        another. Another side lesson learned is that the garbage collection
+        logs are your best friend when debugging degraded performance.
     - mediaType: Header
       headerRank: 4
       mediaText: Exciting upcoming technologies
     - mediaType: Picture
-      filePath: docker.png
+      filePath: hadoop-flink.png
       tagStyle: height:150px;
     - mediaType: Paragraph
       mediaText: |+
-        One of the technologies that I'm most excited to learn about is Docker; a program containerization
-        system. After seeing how Docker is applied to Carnegie's services, I have been adding docker
-        support to all my new projects and some open source projects.
+        One of the technologies that I was most excited to learn about is
+        flink, hadoop, and stream processing in general. Working with these
+        technologies has opened my eyes to the wonderful world of complex event
+        processing and how it can be applied to unbounded data.
     - mediaType: Header
       headerRank: 4
-      mediaText: Software project architecture
+      mediaText: System architecture
     - mediaType: Paragraph
       mediaText: |+
-        I worked with some very smart people who were generous enough to let me tag along to architectural
-        design meetings and explain why they made their technical choices. I don't think I could design a
-        similarly large system as effectively as they could, but I think I have a much better intuition now.
-        I'm almost in awe at how smart my coworkers were, and I hope I have learned some of their skill
-        through osmosis.
-    - mediaType: Header
-      headerRank: 4
-      mediaText: Jacket on, jacket off
-    - mediaType: Picture
-      filePath: jacketOnJacketOff.jpg
-      tagStyle: height:150px;
-    - mediaType: Paragraph
-      mediaText: |+
-        I used to think I was moderately competent in git, but now I feel 20 times more capable.
-        I also don't think I will ever forget how 'git rebase' works for as long as I live. :)
+        I was fortunate enough to work with some very smart and generous
+        people. I made sure to go to each architectural design meeting and
+        learn as much as I could about why they made the technical decisions
+        they did.
+        I hesitate to say I could design a similarly large system as
+        effectively as they could, but I think I have a much better intuition
+        now.
     - mediaType: Header
       headerRank: 2
       mediaText: Act
     - mediaType: Header
       headerRank: 4
-      mediaText: Learn the value of a review
+      mediaText: Be more involved in project design
+    - mediaType: Paragraph
+      mediaText: |+
+        I improved my involvement in project meetings by attending additional
+        meetings like architecture, design and triage meetings. There I could
+        see why certain design decisions were made.
+    - mediaType: Header
+      headerRank: 4
+      mediaText: Go above and beyond
     - mediaType: Picture
-      filePath: codeReviewFace.jpg
+      filePath: deepDive.png
       tagStyle: height:150px;
     - mediaType: Paragraph
       mediaText: |+
-        I learned to value code reviews more once I internalized that one of my co-workers had to stop
-        what they were otherwise doing to evaluate and understand what I wrote. I realize now that
-        reviews are valuable and should not be wasted with easy to catch mistakes. When the reviewer
-        knows that you consider their review valuable, they are likely to do your review sooner.
+        I learned it is often quite valuable for one team member to do a deep
+        dive when investigating something, then presenting their findings to
+        the team once they are done. Whenever I was working on something I
+        thought would be of interest to the team, I wrote it down and presented
+        it at the next opportunity.
     - mediaType: Header
       headerRank: 4
       mediaText: Communication with team
     - mediaType: Paragraph
       mediaText: |+
-        Once I started writing down exactly the things I had accomplished, I realized how many things
-        I forget I even worked on. Preparing what you have to say before stand-ups helped reduce
-        my meeting times and improve the communication within the team. As a result I don’t have to focus
-        on what I have to say during the meeting, and instead can focus on what my coworkers are saying.
-        This helped me better understand the overall system that we were working on.
-    - mediaType: Header
-      headerRank: 4
-      mediaText: Be more involved in project design
-    - mediaType: Paragraph
-      mediaText: |+
-        I improved my involvement in project meetings by attending additional meetings like sprint
-        planning meetings. There I could see the tasks that needed to be done during the sprint and
-        which tasks where still left to do. While there I learned the reasons why the team had to
-        switch database systems during a critical time in development.
+        Once I started writing down exactly the things I had accomplished,
+        I realized how many things I forget I even worked on. Preparing what
+        you have to say before stand-ups helped reduce my meeting times and
+        improve the communication within the team. As a result I don’t have to
+        focus on what I have to say during the meeting, and instead can focus
+        on what my coworkers are saying. This helped me better understand the
+        overall system that we were working on.

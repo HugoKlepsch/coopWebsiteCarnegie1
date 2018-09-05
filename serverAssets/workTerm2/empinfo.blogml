@@ -5,29 +5,34 @@ postMedia:
       headerRank: 2
       mediaText: About Arctic Wolf Networks
     - mediaType: Picture
-      filePath: ctechlogo.jpg
+      filePath: AWN_Logo_Main_Alt_4xdark.png
       tagStyle: height:150px;
     - mediaType: Paragraph
       mediaText: |+
-        Carnegie technologies is a multinational corporation founded in 2010. It focuses most of it's
-        products in the IoT and radio technology markets, with some products innovating internet protocols.
+        Arctic Wolf Networks is a multinational network security corporation
+        founded in 2012. Their main product is their cyber security operations
+        center, which offers 24/7 monitoring for security threats inside and
+        outside and company's network. They differentiate themselves from their
+        competitors with their high-tech data enrichment and analysis pipeline.
     - mediaType: Paragraph
       mediaText: |+
-        The office I worked at (Kitchener, ON) was formerly Pravala networks; a startup developing innovative
-        proprietary extensions to internet protocols that allowed for bandwidth to be aggregated between
-        multiple internet links. This technology can be applied in many ways, including connected vehicles.
+        The office I worked in Kitchener Ontario is their main research and
+        development center, as well as one of the locations their security
+        engineers operate out of. The Kitchener office is responsible for
+        maintaining and extending the functionality of the data enrichment
+        and analysis pipeline.
     - mediaType: Picture
-      filePath: connCar.png
+      filePath: AWN_CyberSOC_v29x-1white.png
       tagStyle: width:100%;
     - mediaType: Paragraph
       mediaText: |+
-        In addition to their networking products, Carnegie also develops a IoT product used for tracking and
-        managing farm animals and equipment.
+        In addition to marketing their security operations center directly to
+        businesses, Arctic Wolf Networks also sells licenses to their security
+        pipeline to external security companies who re-sell the services.
     - mediaType: Paragraph
       mediaText: |+
-        The Kitchener office is a very small team considering it's output, therefore the team needs to
-        extensively use automation wherever possible. Automated testing and continuous integration is just
-        the start of the automation used at Carnegie. All production and development deployments are fully
-        automated, including scaling. Furthermore, all services and build servers are containerized to allow
-        consistent, atomic builds and deployments.
-
+        The Kitchener office is a medium-large team and extensively uses
+        automation to increase developer productivity. Automated testing and
+        continuous integration is only the tip of the iceberg at Arctic Wolf
+        Networks. There is also automated SLI monitoring, automated Jira
+        management, and nearly 100% automated infrastructure management.

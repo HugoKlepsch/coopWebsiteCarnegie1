@@ -3,22 +3,24 @@ pageUnderConstruction: false
 postMedia:
     - mediaType: Paragraph
       mediaText: |+
-        I think Carnegie technologies was almost ideal as a first co-op experience. It was a small team,
-        so I was immediately thrust into the heart of the action, and treated like any employee.
-        Once I familiarized myself with the workings of the company and it's products, my opinions and
-        feedback were heard and respected like the other team members. The small size of the team allowed
-        me to have a lot of responsibilities and interesting tasks.
+        Although I only spent four months at Arctic Wolf Networks, I feel like
+        I have improved myself immensely. I think they were a great
+        introduction to what it is like to work at a medium-large company. It
+        was also eye-opening working for a company where security was such a
+        high priority. It was very nice to be treated as a normal employee from
+        day one, and to have such a large impact on production systems.
     - mediaType: Paragraph
       mediaText: |+
-        I really enjoyed getting to work on not only internal tools, but also production ready external
-        systems.
+        It was also very nice to work on a team that tackles such challenging
+        problems. I was exposed to several very interesting technologies.
     - mediaType: Picture
-      filePath: awesome.png
-      tagStyle: height:250px;
+      filePath: team.jpg
+      tagStyle: width:100%;
     - mediaType: Paragraph
       mediaText: |+
-        The Carnegie team has been really suportive and helpful throughout my time there. They were
-        always glad to help me learn new technologies and use them in my own projects. I'd like to thank
-        specifically Josh for always being available to discuss and make sure I understand, Severn for
-        introducing me to some of the intricacies of C++, and Nicholas for bringing me on board an
-        awesome team.
+        I could not have asked for a better team! They were always available to
+        help me understand what I was working on. Just as they were there for
+        me when I needed help, I was open to help answer their questions.
+        Leaving was bittersweet because I felt like they were all my friends.
+        I'd like to thank each and every one on the team for making this term
+        so worthwhile!
